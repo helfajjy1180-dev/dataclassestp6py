@@ -1,0 +1,20 @@
+[
+    {
+        "titre": "Inception",
+        "realisateur": "Christopher Nolan",
+        "annee": 2010,
+        "note": 8.8
+    },
+    {
+        "titre": "Le Parrain",
+        "realisateur": "Francis Ford Coppola",
+        "annee": 1972,
+        "note": 9.2
+    },
+    {
+        "titre": "Matrix",
+        "realisateur": "Lana Wachowski, Lilly Wachowski",
+        "annee": 1999,
+        "note": 8.7
+    }
+]
