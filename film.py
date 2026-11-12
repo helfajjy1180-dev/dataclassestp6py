@@ -1,39 +1,80 @@
-from dataclasses import dataclass, asdict, replace
+
+from dataclasses import dataclass, asdict
 import json
 
-from livre import Livre
-   
-@dataclass(frozen=True, slots=True)
-class film:
-     titre: str
-     realisateur: str
-     annee: int
-     note: float
 
-def to_json(self):
+@dataclass(frozen=True, slots=True)
+class Film:
+    titre: str
+    realisateur: str
+    annee: int
+    note: float
+
+    # Conversion en JSON
+    def to_json(self):
         return json.dumps(asdict(self), ensure_ascii=False)
 
-def est_classique(self):
+    # Vérifier si le film est classique
+    def est_classique(self):
         return self.annee < 2000
 
-def __lt__(self, autre):
+    # Comparaison selon la note
+    def __lt__(self, autre):
         return self.note < autre.note
 
     # Chargement depuis JSON
-@staticmethod
-def from_json(texte):
+    @staticmethod
+    def from_json(texte):
         data = json.loads(texte)
-        return film(**data)
+        return Film(**data)
 
 
-film1 = film("Inception", "Christopher Nolan", 2010, 8.8)
-film2 = film("Le Parrain", "Francis Ford Coppola", 1972, 9.2)
-film3 = film("Matrix", "Lana Wachowski, Lilly Wachowski", 1999, 8.7)
+# Création des films
+film1 = Film("Inception", "Christopher Nolan", 2010, 8.8)
+film2 = Film("Le Parrain", "Francis Ford Coppola", 1972, 9.2)
+film3 = Film("Matrix", "Lana Wachowski, Lilly Wachowski", 1999, 8.7)
+
+
+# Affichage JSON
+print("JSON du film :")
+print(film1.to_json())
+
+
+# Vérifier si le film est classique
+print("\nFilm classique ?")
+print(film3.est_classique())
+
+
+# Comparaison des films
+print("\nComparaison des notes :")
+print(film1 < film2)
+
+
+# Chargement depuis JSON
+texte = film1.to_json()
+film4 = Film.from_json(texte)
+
+print("\nFilm chargé :")
+print(film4)
+
+
+# Enregistrement dans un fichier JSON
+films = [film1, film2, film3]
 
 with open("films.json", "w", encoding="utf-8") as fichier:
     json.dump(
-        [asdict(film) for film in [film1, film2, film3]],
+        [asdict(f) for f in films],
         fichier,
         ensure_ascii=False,
         indent=4
     )
+
+print("\nFilms enregistrés avec succès !")
+
+
+# Tri selon les notes
+films_tries = sorted(films)
+
+print("\nFilms triés par note :")
+for f in films_tries:
+    print(f.titre, f.note)
